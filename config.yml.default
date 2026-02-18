@@ -1,0 +1,6 @@
+listen_port: 9220
+timeout: 30
+#username: admin
+#password: admin
+#job: 'redfish-myjob'
+#modules: 'Processors,Memory'
