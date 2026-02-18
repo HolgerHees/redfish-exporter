@@ -1,7 +1,5 @@
 # Redfish-Exporter
 
-***This is currently a work in progress and can break at any time***
-
 This is a Prometheus Exporter for extracting metrics from a server using the Redfish API.
 
 It has been tested with the following server models:
@@ -11,46 +9,7 @@ It has been tested with the following server models:
 - XFusion 2258 V7
 - Gigabyte G492-Z50
 
-## Parameters
-
-### The config.yml file
-
-```
-listen_port: 9220
-timeout: 30
-#job: 'redfish-job1'
-#modules: 'Processors,Memory'
-#username: admin
-#password: admin
-```
-
-- `listen_port` is the default service port if you start redfish exporter in service mode
-- `timeout` is the default timeout for any redfish connection
-- `job` is the default fallback, if not specified as a cli argument or a query parameter
-- `modules` is the default fallback, if not specified as a cli argument or a query parameter
-- `username` and `password` is the default fallback, if not specified in job.yml or ENV vars
-
-all of these parameters can also be defined as a ENV var like LISTEN_PORT, TIMEOUT, JOB, MODULES, USERNAME, PASSWORD
-
-### The secrets.yml file
-
-```
-REDFISH_JOB1_USERNAME: root
-REDFISH_JOB1_PASSWORD: root123
-```
-
-Login credentials for servers, firewalls and switches can either be added to the secrets.yaml file or passed via environment variables. The environment variables are taking precedence over the entries in secrets.yaml file.
-
-The mapping of job names to environment variables follows a schema: `REDFISH_JOB1_USERNAME` and `REDFISH_JOB1_PASSWORD` would be the variables for example of a job called `redfish-job1`.
-A slash gets replaced by underscore and everything gets converted to uppercase.
-
-The order of processing username/password data is
-
-1. secrets.yml
-2. env vars
-3. fallback to config.yml
-
-## Redfish exporter as a cli command
+## Using as a cli command
 
 Redfish export can be used as a command line tool, to debug redfish data.
 
@@ -76,10 +35,9 @@ python main.py --target myredfishinterface.mydomain.de --job redfish-job1
 
 This call will fetch all available redfish metrics from your server
 
-To limit the processed redfish modules just specify like `--module "Cpu,Memory,Storage"`
+To limit the processed modules, just specify like `--module "Processors,Memory,Storage"`
 
-## Redfish exporter as a service
-
+## Using as a service
 
 to start the service, just run it without a target parameter
 
@@ -95,6 +53,47 @@ to trigger a redfish service check, just call
 curl "http://localhost:9220/?job=redfish-job1&target=myredfishinterface.mydomain.de"
 
 ```
+
+To limit the processed modules, just specify like `&module=Processors,Memory,Storage`
+
+## Configuration
+
+### The config.yml file
+
+```
+listen_port: 9220
+timeout: 30
+#job: 'redfish-job1'
+#modules: 'Processors,Memory'
+#username: admin
+#password: admin
+```
+
+- `listen_port` is the default service port if you start redfish exporter in service mode
+- `timeout` is the default timeout for any redfish connection
+- `job` is the default fallback, if not specified as a cli argument or a query parameter
+- `modules` is the default fallback, if not specified as a cli argument or a query parameter
+- `username` and `password` is the default fallback, if not specified in job.yml or ENV vars
+
+All of these parameters can also be defined as a ENV var like LISTEN_PORT, TIMEOUT, JOB, MODULES, USERNAME, PASSWORD
+
+### The secrets.yml file
+
+```
+REDFISH_JOB1_USERNAME: root
+REDFISH_JOB1_PASSWORD: root123
+```
+
+Login credentials for servers, firewalls and switches can either be added to the secrets.yaml file or passed via environment variables. The environment variables are taking precedence over the entries in secrets.yaml file.
+
+The mapping of job names to environment variables follows a schema: `REDFISH_JOB1_USERNAME` and `REDFISH_JOB1_PASSWORD` would be the variables for example of a job called `redfish-job1`.
+A slash gets replaced by underscore and everything gets converted to uppercase.
+
+The order of processing username/password data is
+
+1. secrets.yml
+2. env vars
+3. fallback to config.yml
 
 ### Supported Modules
 
