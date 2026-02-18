@@ -75,7 +75,7 @@ timeout: 30
 - `modules` is the default fallback, if not specified as a cli argument or a query parameter
 - `username` and `password` is the default fallback, if not specified in job.yml or ENV vars
 
-All of these parameters can also be defined as a ENV var like LISTEN_PORT, TIMEOUT, JOB, MODULES, USERNAME, PASSWORD
+All of these parameters can also be defined as a environment variable like `LISTEN_PORT`, `TIMEOUT`, `JOB`, `MODULES`, `USERNAME`, `PASSWORD`
 
 ### The secrets.yml file
 
