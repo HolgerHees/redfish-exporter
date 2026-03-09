@@ -3,6 +3,7 @@ from collectors._collector import Collector
 class Handler(Collector):
     def process(self, name, url):
         processor_collection = self.session.fetch(url)
+
         if not processor_collection:
             return False
 

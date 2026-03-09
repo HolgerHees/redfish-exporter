@@ -133,7 +133,6 @@ class Handler:
 
             sub_urls = session.getSubUrls()
 
-
             if not modules or "Certificate" in modules:
                 collector = importlib.import_module("collectors.base_certificate")
                 collector.Handler(session).process()
