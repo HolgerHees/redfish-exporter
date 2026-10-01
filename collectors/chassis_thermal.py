@@ -10,7 +10,7 @@ class Handler(Collector):
         healthMetricFamily = self.session.getMetricBuilder().createMetricFamily("fan_health", "fan health")
         speedMetricFamily = self.session.getMetricBuilder().createMetricFamily("fan_reading", "fan data")
 
-        sensorMetricFamily = chassis_sensors.Handler.getSensorMetricFamily(self.session)
+        #sensorMetricFamily = chassis_sensors.Handler.getSensorMetricFamily(self.session)
 
         if name == "ThermalSubsystem":
             if 'Fans' in thermal_data and '@odata.id' in thermal_data.get('Fans', {}):

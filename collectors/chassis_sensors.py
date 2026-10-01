@@ -1,14 +1,12 @@
 from collectors._collector import Collector
 
 class Handler(Collector):
-    metricFamily = None
-
     def process(self, name, url):
         sensors_data = self.session.fetch(url)
         if sensors_data is None:
             return False
 
-        metricFamily = self.getSensorMetricFamily(self.session)
+        metricFamily = session.getMetricBuilder().createMetricFamily("sensor_reading", "sensor data")
 
         for sensor in sensors_data['Members']:
             metric_info = self.session.fetch(sensor['@odata.id'])
@@ -37,13 +35,6 @@ class Handler(Collector):
 
         return True
 
-    @staticmethod
-    def getSensorMetricFamily(session):
-        if Handler.metricFamily is None:
-            Handler.metricFamily = session.getMetricBuilder().createMetricFamily("sensor_reading", "sensor data")
-        return Handler.metricFamily
-
-    @staticmethod
     def addSensorMetric(metricFamily, id, name, type, unit, context, value):
         current_labels = {
             "sensor_name": name,
