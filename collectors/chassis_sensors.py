@@ -6,7 +6,7 @@ class Handler(Collector):
         if sensors_data is None:
             return False
 
-        metricFamily = session.getMetricBuilder().createMetricFamily("sensor_reading", "sensor data")
+        metricFamily = self.session.getMetricBuilder().createMetricFamily("sensor_reading", "sensor data")
 
         for sensor in sensors_data['Members']:
             metric_info = self.session.fetch(sensor['@odata.id'])
