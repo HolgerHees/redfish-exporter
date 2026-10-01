@@ -35,7 +35,7 @@ class Handler(Collector):
 
         return True
 
-    def addSensorMetric(metricFamily, id, name, type, unit, context, value):
+    def addSensorMetric(self, metricFamily, id, name, type, unit, context, value):
         current_labels = {
             "sensor_name": name,
             "sensor_type": type,
