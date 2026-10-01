@@ -5,13 +5,17 @@ from prometheus_client.core import GaugeMetricFamily
 from prometheus_client.exposition import generate_latest
 
 class MetricsFamily:
-    def __init__(self, name, description, labels = {}):
+    def __init__(self, name, description, labels = None):
+        if labels is None:
+            labels = {}
         self.name = name
         self.labels = labels
         self.gaugeMetricFamily = GaugeMetricFamily("redfish_" + self.name, description, labels=labels)
 
-    def addMetricSample(self, value, labels = {}, name_suffix = None):
+    def addMetricSample(self, value, labels = None, name_suffix = None):
         try:
+            if labels is None:
+                labels = {}
             value = int(value)
         except (ValueError, TypeError):
             return
@@ -28,7 +32,9 @@ class Metrics:
     def initBaseLabel(self, base_label):
         self.base_label = base_label
 
-    def createMetricFamily(self, name, description, labels = {}):
+    def createMetricFamily(self, name, description, labels = None):
+        if labels is None:
+            labels = {}
         labels.update(self.base_label)
         self.metricFamily.append(MetricsFamily(name, description, labels))
         return self.metricFamily[-1]
